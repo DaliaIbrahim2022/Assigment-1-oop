@@ -1,92 +1,99 @@
-#include <iostream>
-#include<bits/stdc++.h>
-#include<algorithm>
-#include<string>
-#include<utility>
+#include <bits/stdc++.h>
 #define ll long long
-#define faster ios_base::sync_with_stdio(false),cin.tie(NULL) ,cout.tie(0);
+#define besmellah ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 using namespace std;
-int display_menu()
+template <class T>
+class Darray
 {
-    int choice;
-    cout<<"1 : is to add player in this list ."<<endl;
-    cout<<"2 : is to print this list  sorted ."<<endl;
-    cout<<"3 : is to check player`s name  in this list ."<<endl;
-    cin>>choice;
-    return choice;
-}
-bool sortbysecdesc(const pair<string,int> &a,const pair<string,int> &b)
-{
-    return a.second>b.second;
-}
-int main() {
-    int choice;
-    vector< pair <string,int>> vec;
-    vector< pair <string,int>>::iterator it;
-    string name,pn;
-    ll score,psc;
-    cout<<"please enter the list  : ";
-    for(ll i=0;i<10;i++)
+private:
+    T* ptr;
+    int length;
+    int  n;
+public:
+    Darray()
     {
-        cin>>name>>score;
-        vec.emplace_back(name,score);
-    }
-    sort(vec.begin(), vec.end(), sortbysecdesc);
-    while (true)
-    {
-        choice = display_menu();
-        if (choice == 1)
+        ptr = new T[n];
+        cout<<"enter size of Array : ";
+        cin>>n;
+        length = n;
+        for(int i=0;i<n;i++)
         {
-            cout << "please enter the players name  and his score you want to add : " << endl;
-            cin >> pn >> psc;
-            bool test = false;
-            for (int i = 0; i < 10; i++) {
-                if (psc >= vec[i].second) {
-                    vec.erase(vec.end());
-                    vec.emplace_back(pn, psc);
-                    sort(vec.begin(), vec.end(), sortbysecdesc);
-                    cout << " adding successful" << endl;
-                    test = true;
-                    break;
-                }
-            }
-            if (test==true)
-                continue;
-            else {
-                cout << " i can not add this player " << endl;
-            }
-            return 0;
-        }
-        else if (choice == 2)
-        {
-            for(it=vec.begin();it!=vec.end();it++)
-            {
-                cout<<it->first<<"   "<<it->second<<endl;
-            }
-            return 0;
-        }
-        else if (choice == 3)
-        {
-            string name1;
-            cout<<"please enter player name   "<<endl;
-            cin>>name1;
-            bool tst=false;
-            for (int i = 0; i < 10; i++) {
-                if (name1 == vec[i].first) {
-                    cout<<vec[i].first<<" "<<vec[i].second;
-                    tst=true;
-                    break;
-                }
-            }
-            if(!tst)
-            {
-                cout<<"this player dose not exist"<<endl;
-            }
-            return 0;
+            ptr[i]=0;
         }
     }
+    Darray(int n)
+    {
+        ptr = new T[n];
+        length=n;
+        for(int i=0;i<n;i++)
+        {
+            ptr[i]=0;
+        }
 
-    return 0;
+
+    }
+    void getarray()
+    {
+        cout<<"enter the array`s value : ";
+        for(int i=0;i<length;i++)
+        {
+            cin>>ptr[i];
+        }
+    }
+    Darray(const Darray& anotherarray){
+        delete []ptr;
+        length=anotherarray.length;
+        ptr = new T[length];
+        for (int i = 0; i < length; i++) {
+            ptr[i] = anotherarray.ptr[i];
+        }
+    }//copy constructor
+    T& operator[](int index)
+    {
+        if (index >= length) {
+            cout<<" index is out of boundary "<<endl;
+        }
+        return ptr[index];
+    }
+    T& operator =(const Darray& anotherarray)
+    {
+        length = anotherarray.length;
+        delete []ptr;
+        ptr = new T[length];
+        for (int i = 0; i < length; i++)
+        {
+            ptr[i] = anotherarray.ptr[i];
+        }
+    }
+    int size()
+    {
+        return length;
+    }
+    void print()
+    {
+        cout<<"values is : "<<endl;
+        for(int i=0;i<length;i++)
+        {
+            cout<<ptr[i]<<" ";
+        }
+    }
+    ~Darray();
+};
+//_________________________
+template<class T>
+Darray<T>::~Darray() {
+    delete[] ptr;
 }
+int main()
+{
+    Darray<char> a;
+    a.getarray();
+    Darray <char> b(a);
+    //b.getarray();
+    // b[1]='g';
+    //b=a;
+    cout<<"size of array is :" <<b.size()<<endl;
+    cout<<"the value of index is : "<<b[1]<<endl;
+    b.print();
 
-
+}
