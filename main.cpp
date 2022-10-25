@@ -1,53 +1,43 @@
 #include<bits/stdc++.h>
-
-#define inf 1e9
+#include<algorithm>
+#include<string>
+using namespace std;
 #define ll long long
-#define vc  vector
-#define vll  vc<ll>
-//#define s second
-#define f first
-#define fro front
-#define bk back
-#define e "\n"
-#define speed                     ios_base::sync_with_stdio(0);    cin.tie(0);    cout.tie(0);
-
-using namespace std ;
-
-bool bear(int n)
+#define faster ios_base::sync_with_stdio(false),cin.tie(NULL) ,cout.tie(0);
+#define endl '\n'
+string remove(string &str)
 {
-    if(n==42)
-        return true;
-    if(n<42) return false;
-    assert(n >= 42);
-    bool res = 0;
-    if(n%5==0){
-        res |= bear(n-42);
+    //the Answer to life, the Universe, and everything IS 42.
+    string ss;
+    for(int i=0;i<str.length();)
+    {
+        if(str[i]==' ')
+        {
+            if(i==0||i==str.length()-1)
+            {
+                i++;
+                continue;
+            }
+            while(str[i+1]==' ')
+                i++;
+        }
+        ss+=str[i++];
     }
-    if(n%2==0){
-        res |= bear(n/2);
-    }
-    if(n%3==0 || n%4 ==0){
-        int temp = n%100;
-        int temp2=(temp%10)*(temp/10);
-        if(temp2 != 0)
-          res |= bear(n-temp2);
-    }
-    return res;
+    return ss;
+
 }
-
-int main() {
-
-    //int n; cin>>n;
-    //if(bear(n))  cout<< "yes";
-    //else cout<<"no";
-
-    cout<<" bear of 250 " <<  bear(250) << e ;
-    cout<<" bear of 42 " <<  bear(42) <<e;
-    cout<<" bear of 84 " <<  bear(84) <<e;
-    cout<<" bear of 53 " <<  bear(53) <<e;
-    cout<<" bear of 41 " <<  bear(41) <<e;
-
-
-
-
+int main()
+{
+    string str,nstr;
+    cout<<"please enter your sentence : ";
+    getline(cin,str,'.');
+    nstr= remove(str);
+    for (int i = 0; i <= nstr.size(); i++) {
+        if (nstr[i] != ' ') {
+            nstr[i] = toupper(nstr[i]);
+        }
+        transform(nstr.begin() + 1, nstr.end(), nstr.begin() + 1, ::tolower);
+    }
+cout<<"modified sentence : "<<nstr<<"."<<endl;
+    return 0;
 }
