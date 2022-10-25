@@ -1,47 +1,30 @@
-#include<iostream>
-#include<string>
-#include<sstream>
+#include <iostream>
+#include <iomanip>
 using namespace std;
-int main() {
-    string s, s2;
-    cout << "Enter a sentence: " << endl;
-    getline(cin, s);
-    stringstream ss(s);
-    while (ss >> s2)
+void pattern(int n, int i)
+{
+    if (n == 1)
     {
-        for (int i = 0; i < s2.size(); i++)
+        for (int k = 0; k < i; k++)
         {
-            if (s2[i] == 'h' && s2[i + 1] == 'i' && s2[i + 2] == 'm')
-            {
-                if (!isalpha(s2[i + 3]))
-                {
-                    s2 = s2.substr(0, 3) + " or her" + s2.substr(i + 3, s2.size());
-
-                }
-            }
+            cout << " ";
         }
-        for (int i = 0; i < s2.size(); i++)
-        {
-            if (s2[i] == 'H' && s2[i + 1] == 'e')
-            {
-                if (!isalpha(s2[i + 2]))
-                {
-                    s2 = s2.substr(0, 2) + " or she" + s2.substr(i + 2, s2.size());
-
-                }
-            }
-        }
-        for (int i = 0; i < s2.size(); i++)
-        {
-            if (s2[i] == 'h' && s2[i + 1] == 'e')
-            {
-                if (!isalpha(s2[i + 2]))
-                {
-                    s2 = s2.substr(0, 2) + " or she" + s2.substr(i + 2, s2.size());
-                }
-            }
-
-        }
-        cout << s2 << " ";
+        cout << "*" << endl;
+        return;
     }
+    pattern(n/2, i);
+    for (int k = 0; k < i; k++)
+    {
+        cout << " ";
+    }
+    for (int j = 0; j < n; j++)
+    {
+        cout << "*";
+    }
+    cout << endl;
+    pattern(n/2, (i+n/2));
+}
+int main ()
+{
+    pattern(8, 0);
 }
